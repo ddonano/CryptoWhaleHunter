@@ -2,7 +2,6 @@ import time
 import os
 import sys
 import re
-import argparse
 import requests
 from bs4 import BeautifulSoup as bs
 
@@ -57,15 +56,15 @@ def main(contractaddress, sqlname, minsize):
             dataBase.write(sqlname, txHash, time, send, rev, amount)
             print(time + " " + 5 * "." + " " + rev + " " + 5 * "." + " " + str(amount))
 
+# set sys.argv with default value
+def default_argv(pos,default_value):
+    return sys.argv[int(pos)] if len(sys.argv) > int(pos) else str(default_value)
 if __name__ == '__main__':
 
     try:
-        parser = argparse.ArgumentParser()
-        parser.add_argument('-contractaddress', type=str, help='ERC20 Contract Address,search in https://etherscan.io/tokens', default='0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0')
-        parser.add_argument('-minsize', type=float, help='watch token min size', default=10000)
-        args = parser.parse_args()
-        contractaddress = args.contractaddress
-        minsize = args.minsize
+        print(sys.argv)
+        contractaddress = default_argv(1, "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0")
+        minsize = default_argv(2, 10000)
         # auto create table as your input ERC20 Contract,
         # usually,the sql name I just get the the  last 6 places,before it ,add just letter from -12 to -6
         # as the sql table first place is only just letter.
@@ -77,7 +76,7 @@ if __name__ == '__main__':
         print("[+]Hello! Welcome to ERC20TokenWhaleWatcher!")
         # time.sleep(3)
         print("[+]This script traces ERC20 token whales parsing info from etherscan.io")
-        print("[+]ERC20 token : " + contractaddress)
+        print("[+]ERC20 token(search in https://etherscan.io/tokens) : " + contractaddress)
         print("[+]Watched minimum quantity : " + str(minsize))
         # time.sleep(3)
         print("[+]You can terminate the script anytime by pressing CTRL-Z")
@@ -85,7 +84,7 @@ if __name__ == '__main__':
         # input("[+]If you are ready to find some whales press RETURN")
 
         while 1:
-            # default token is EOS ERC20 Contract,default watch max size is 10000
+            # default token is EOS ERC20 Contract,default watch min size is 10000
             main(contractaddress, sqlname, minsize)
             # extract data from the source with a 15s time difference
             time.sleep(15)
