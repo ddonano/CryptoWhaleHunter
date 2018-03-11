@@ -9,8 +9,7 @@ This script parses the data found in etherscan(Live Blockchain Explorer) and tra
 Run as ```python tokenWhaleWatcher.py [ERC20 Contract] [watched minimum quantity]```<br />
 you can search ERC20 Contract in https://etherscan.io/tokens<br />
 default token is EOS ERC20 Contract,default watched minimum quantity is 10000<br />
-<br />
-e.g.:
+e.g.<br />
 ```python tokenWhaleWatcher.py 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0 10000```<br />
 ```python tokenWhaleWatcher.py```<br />
 
